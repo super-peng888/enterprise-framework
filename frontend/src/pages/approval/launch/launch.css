@@ -1,0 +1,97 @@
+/* 发起审批页：模板卡片网格，配色复用 Core Panel 主题变量 */
+
+.launch-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.launch-head {
+  padding: 16px 20px;
+}
+
+.launch-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-title);
+}
+
+.launch-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.launch-loading {
+  display: flex;
+  justify-content: center;
+  padding: 64px 0;
+}
+
+.launch-empty {
+  padding: 48px 0;
+}
+
+.launch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.launch-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.25s;
+}
+
+.launch-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.launch-card.is-disabled {
+  opacity: 0.6;
+}
+
+.launch-card.is-disabled:hover {
+  transform: none;
+  box-shadow: var(--card-shadow);
+}
+
+.launch-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary-contrast);
+  background: var(--color-primary);
+  box-shadow: var(--btn-primary-shadow);
+}
+
+.launch-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-title);
+}
+
+.launch-card-meta {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  flex: 1;
+}
+
+.launch-modal-title {
+  margin-bottom: 16px;
+}
+
+.launch-modal-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-body);
+  margin-bottom: 8px;
+}

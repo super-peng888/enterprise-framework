@@ -1,0 +1,46 @@
+# framework-system 业务配置 —— dataId: framework-system.yaml, group: DEFAULT_GROUP
+server:
+  port: ${SERVER_PORT:8091}
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:ef}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+  sql:
+    init:
+      # schema.sql 全部使用 IF NOT EXISTS / WHERE NOT EXISTS，可重复执行
+      mode: always
+      schema-locations: classpath:schema.sql
+  jpa:
+    hibernate:
+      # 表结构以 schema.sql 为准，JPA 不负责建表；联调稳定后可改 validate 做实体-表一致性校验
+      ddl-auto: none
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 3s
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASS:guest}
+
+jwt:
+  # HS256 要求密钥 >= 32 字节；与 framework-gateway 保持一致；生产环境务必通过 JWT_SECRET 环境变量注入
+  secret: ${JWT_SECRET:framework-dev-secret-key-please-change-32bytes}
+  expire-minutes: ${JWT_EXPIRE_MINUTES:720}
+
+# 飞书企业自建应用（真实换 token 流程见 AuthController 注释，本期为占位配置）
+feishu:
+  app-id: ${FEISHU_APP_ID:}
+  app-secret: ${FEISHU_APP_SECRET:}
+  redirect-uri: ${FEISHU_REDIRECT_URI:http://localhost:5175/auth/callback}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

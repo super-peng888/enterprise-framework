@@ -1,0 +1,348 @@
+/*
+ * 主题变量默认值（= 浅色 cool）。
+ * 两套主题（cool / dark）的完整变量表在 src/styles/themes.css，
+ * 由 <html data-theme="..."> 切换；此处 :root 仅作为 JS 挂载前的兜底，
+ * 新增主题相关变量时两边要同步。
+ */
+:root {
+  /* 主色：中性近黑（dark 反转为浅底深字），无紫 */
+  --color-primary: #1f2124;
+  --color-primary-hover: #2a2d31;
+  --color-primary-light: rgba(23, 24, 26, 0.07);
+  --color-primary-contrast: #ffffff;
+  /* 主按钮质感：顶部微高光 + 细腻投影 */
+  --btn-primary-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+
+  /* 应用底色：平色灰（灰底白卡结构，body 卡浮于其上） */
+  --bg-page: #f7f7f7;
+
+  /* 文本色板（tailwind slate 系） */
+  --text-title: #101828;
+  --text-body: #475467;
+  --text-secondary: #98a2b3;
+  --icon-muted: #98a2b3;
+
+  /* 状态色 + 状态浅底 */
+  --color-success: #0d9f6e;
+  --color-warning: #d97706;
+  --color-danger: #e5484d;
+  --color-info: #0891b2;
+  --success-light: #ecfdf5;
+  --warning-light: #fffbeb;
+  --danger-light: #fef2f2;
+  --info-light: rgba(8, 145, 178, 0.1);
+  --neutral-light: #f1f5f9;
+  --mark-bg: #fef08a;
+
+  /* 内容卡片：纯白 + 发丝边 + 极浅阴影（简约浅色，不做玻璃模糊） */
+  --glass-bg: #ffffff;
+  --glass-border: #e9edf0;
+  --glass-blur: none;
+  --card-radius: 16px;
+  --card-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --card-shadow-hover: 0 4px 12px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.04);
+
+  /* 悬浮条（DataTable 搜索区等）：浅灰内嵌 + 发丝阴影 */
+  --float-bar-bg: #f9fafb;
+  --float-bar-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --float-bar-blur: none;
+
+  /* 实底 / 浅底 / 边框 */
+  --surface: #ffffff;
+  --surface-2: #f7f8fa;
+  --border: #e9edf0;
+  --border-strong: #d9dee6;
+  /* 卡片上的细分隔线 / 悬停浅底 */
+  --border-glass: #e9edf0;
+  --hover-glass: #f5f6f8;
+  --hover-glass-strong: #eef0f4;
+
+  /* 布局件：sidebar 透明透出应用底；菜单 hover 浅灰 / 选中灰底近黑字 */
+  --menu-hover-bg: rgba(0, 0, 0, 0.045);
+  --menu-selected-bg: #ececee;
+  --menu-selected-color: #17181a;
+  --menu-selected-shadow: none;
+  --table-header-bg: #f9fafb;
+  --table-row-hover: rgba(0, 0, 0, 0.03);
+  --overlay-bg: rgba(255, 255, 255, 0.94);
+  --overlay-bg-strong: rgba(255, 255, 255, 0.97);
+  --overlay-shadow: 0 12px 32px rgba(16, 24, 40, 0.12);
+  --scrollbar-thumb: #d0d5dd;
+
+  /* 统计卡 pastel chip：浅底 + 同色图标（dark 在 themes.css 覆盖） */
+  --chip-amber-bg: #fef3c7;
+  --chip-amber-fg: #d97706;
+  --chip-blue-bg: #e0f2fe;
+  --chip-blue-fg: #0284c7;
+  --chip-pink-bg: #fce7f3;
+  --chip-pink-fg: #db2777;
+  --chip-violet-bg: #ede9fe;
+  --chip-violet-fg: #7c3aed;
+
+  /* 环境光晕：仅极淡氛围（0.10-0.16），给 chrome 玻璃一点可模糊的颜色，内容区保持干净 */
+  --glow-1-bg: radial-gradient(circle, rgba(96, 122, 245, 0.16), rgba(96, 122, 245, 0) 70%);
+  --glow-2-bg: radial-gradient(circle, rgba(52, 199, 164, 0.13), rgba(52, 199, 164, 0) 70%);
+  --glow-3-bg: radial-gradient(circle, rgba(245, 178, 132, 0.12), rgba(245, 178, 132, 0) 70%);
+  --glow-4-bg: radial-gradient(circle, rgba(112, 190, 250, 0.13), rgba(112, 190, 250, 0) 70%);
+  --glow-5-bg: radial-gradient(circle, rgba(154, 140, 250, 0.12), rgba(154, 140, 250, 0) 70%);
+
+  /* 登录页品牌区：中性深灰（与主色同族，无紫） */
+  --login-brand-bg: linear-gradient(150deg, #26292e 0%, #17181a 55%, #23282e 100%);
+  --login-glow-2-bg: radial-gradient(circle, rgba(148, 163, 184, 0.3) 0%, rgba(148, 163, 184, 0) 70%);
+
+  /* 布局尺寸 */
+  --sidebar-width: 210px;
+  --sidebar-width-collapsed: 72px;
+  --header-height: 60px;
+  /* body 圆角大卡与视口的间距 / 卡片圆角 */
+  --layout-gap: 8px;
+  --body-radius: 18px;
+  --body-shadow: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    'Dream Han Sans CN', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue',
+    Helvetica, Arial, sans-serif;
+  background: var(--bg-page);
+  background-attachment: fixed;
+  color: var(--text-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------------- 环境光晕（5 团固定定位径向渐变，位置覆盖内容区） ---------------- */
+
+.ambient-glows {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-glows .glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform;
+  animation: glow-drift 24s ease-in-out infinite;
+}
+
+/* 右上：主色 */
+.ambient-glows .glow-1 {
+  width: 720px;
+  height: 720px;
+  top: -200px;
+  right: -80px;
+  background: var(--glow-1-bg);
+}
+
+/* 左下 */
+.ambient-glows .glow-2 {
+  width: 640px;
+  height: 640px;
+  bottom: -180px;
+  left: -100px;
+  background: var(--glow-2-bg);
+  animation-delay: -6s;
+}
+
+/* 中部偏左 */
+.ambient-glows .glow-3 {
+  width: 620px;
+  height: 620px;
+  top: 28%;
+  left: 26%;
+  background: var(--glow-3-bg);
+  animation-delay: -12s;
+}
+
+/* 右下 */
+.ambient-glows .glow-4 {
+  width: 560px;
+  height: 560px;
+  bottom: 4%;
+  right: 6%;
+  background: var(--glow-4-bg);
+  animation-delay: -18s;
+}
+
+/* 左上 */
+.ambient-glows .glow-5 {
+  width: 600px;
+  height: 600px;
+  top: -120px;
+  left: -80px;
+  background: var(--glow-5-bg);
+  animation-delay: -9s;
+}
+
+@keyframes glow-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -24px) scale(1.06);
+  }
+  66% {
+    transform: translate(-24px, 18px) scale(0.96);
+  }
+}
+
+/* ---------------- 通用玻璃卡片 ---------------- */
+
+.core-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 20px 24px;
+}
+
+.core-card-title {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-title);
+}
+
+/* ---------------- 主按钮：质感深色（近黑底白字 / dark 反转浅底深字） ---------------- */
+
+.ant-btn-primary {
+  border-radius: 10px;
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+  /* !important：压过 antd cssinjs 默认的 0 2px 0 实底影 */
+  box-shadow: var(--btn-primary-shadow) !important;
+}
+
+.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+  background: var(--color-primary-hover);
+  color: var(--color-primary-contrast);
+}
+
+/* 页面撑满主区域高度（配合 DataTable 自动撑高） */
+.page-fill {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--header-height) - 64px);
+  min-height: 480px;
+}
+
+/* SchemaForm 空白占位符：渲染端的空占位块（见 src/components/SchemaForm） */
+.schema-form-placeholder {
+  height: 58px;
+}
+
+/* SchemaForm v2 容器：group=标题分区 / block=虚线边框块 */
+.schema-form-section {
+  margin-bottom: 8px;
+}
+
+.schema-form-section.is-block {
+  border: 1px dashed var(--border-strong);
+  border-radius: 12px;
+  padding: 12px 16px 0;
+}
+
+.schema-form-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-title);
+  margin-bottom: 12px;
+  padding-left: 8px;
+  border-left: 3px solid var(--color-primary);
+  line-height: 1.2;
+}
+
+/* SchemaForm 明细子表：表格本体走 antd 主题 token，这里只管留白与只读标题 */
+.schema-form-subtable {
+  width: 100%;
+}
+
+/* SchemaForm 审批字段权限：edit 模式下只读字段的文本回显（对齐 antd 垂直表单行高） */
+.schema-form-ro-field {
+  margin-bottom: 24px;
+}
+
+.schema-form-ro-field-label {
+  font-size: 14px;
+  color: var(--text-title);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.schema-form-ro-field-value {
+  font-size: 14px;
+  color: var(--text-body);
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  word-break: break-all;
+}
+
+.schema-form-subtable-ro {
+  margin-top: 16px;
+}
+
+.schema-form-subtable-ro-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-title);
+  margin-bottom: 8px;
+}
+
+/* ---------------- antd 浮层玻璃化（保持可读性，背景不透明度 ≥0.85 + blur） ---------------- */
+
+.ant-popover .ant-popover-inner,
+.ant-dropdown .ant-dropdown-menu,
+.ant-select-dropdown,
+.ant-picker-dropdown .ant-picker-panel-container,
+.ant-modal .ant-modal-content,
+.ant-drawer .ant-drawer-content {
+  background: var(--overlay-bg);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-radius: 14px;
+  box-shadow: var(--overlay-shadow);
+}
+
+.ant-modal .ant-modal-content,
+.ant-drawer .ant-drawer-content {
+  background: var(--overlay-bg-strong);
+}
+
+/* ---------------- 滚动条 ---------------- */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}

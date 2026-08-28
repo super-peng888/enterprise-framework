@@ -1,0 +1,41 @@
+# ---------- 构建产物 ----------
+# Java / Maven
+target/
+*.class
+*.jar
+!**/maven/wrapper/*.jar
+hs_err_pid*
+
+# 前端
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# ---------- 环境与密钥（模板除外） ----------
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# ---------- 日志 ----------
+logs/
+*.log
+nohup.out
+
+# ---------- IDE / 工具 ----------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.iml
+.github/modernize/
+
+# ---------- 操作系统 ----------
+.DS_Store
+Thumbs.db
+
+# ---------- 验证/测试产物 ----------
+frontend/scripts/out/
+edge-shot*/
+.pytest_cache/

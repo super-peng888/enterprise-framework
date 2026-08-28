@@ -1,0 +1,408 @@
+/* DataTable 卡片样式，配色全部走全局 CSS 变量（src/styles/global.css + themes.css）
+ * 结构：dt-root（卡片容器，12px 间隙；浅色纯白发丝边 / dark 磨砂浮板）
+ *   ├─ dt-search  独立悬浮搜索条（浅色浅灰内嵌 / dark 磨砂，浮在表格上方）
+ *   └─ dt-card    表格区（工具栏 + 表格，区域间只用留白分隔，无分隔线）
+ */
+
+.dt-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  /* 整卡玻璃：搜索区以悬浮层形式叠在卡内（堆叠质感），不用分隔线 */
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 12px;
+  gap: 12px;
+}
+
+.dt-root:fullscreen {
+  background: var(--bg-page);
+  overflow: auto;
+  padding: 16px;
+}
+
+/* 工具栏 + 表格区域：透明层（玻璃在根卡上） */
+.dt-card {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* flat 嵌卡模式：根卡透明，搜索区悬浮条保留（浮在外层页卡上） */
+.dt-root.dt-flat {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 0;
+}
+
+/* ---------------- 搜索区（悬浮玻璃条） ---------------- */
+
+.dt-search {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 18px;
+  flex-shrink: 0;
+  /* 悬浮搜索条：浅色为浅灰内嵌（#f9fafb）+ 发丝阴影；dark 为磨砂浮层 */
+  background: var(--float-bar-bg);
+  backdrop-filter: var(--float-bar-blur);
+  -webkit-backdrop-filter: var(--float-bar-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  box-shadow: var(--float-bar-shadow);
+}
+
+.dt-search-fields {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 16px;
+  overflow: hidden;
+  max-height: 320px;
+  transition: max-height 0.25s ease;
+}
+
+.dt-search-fields.is-collapsed {
+  max-height: 32px;
+}
+
+.dt-search-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 264px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.dt-search-label {
+  width: 64px;
+  text-align: right;
+  font-size: 13px;
+  color: var(--text-body);
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dt-search-control {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 按钮组：始终钉在右上角，折叠/展开都不动 */
+.dt-search-actions {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+}
+
+.dt-collapse-toggle {
+  font-size: 13px;
+  color: var(--color-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dt-collapse-icon {
+  transition: transform 0.25s;
+}
+
+.dt-collapse-icon.is-up {
+  transform: rotate(180deg);
+}
+
+/* ---------------- 工具栏 ---------------- */
+
+.dt-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px 4px;
+  flex-shrink: 0;
+}
+
+.dt-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.dt-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-title);
+  margin-right: 4px;
+}
+
+.dt-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.dt-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.dt-tool-btn:hover {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+/* ---------------- 表格 ---------------- */
+
+.dt-table-wrap {
+  flex: 1;
+  min-height: 0;
+  padding: 8px 12px 12px;
+}
+
+.dt-root .ant-table {
+  background: transparent;
+}
+
+.dt-root .ant-table-container,
+.dt-root .ant-table-body,
+.dt-root .ant-table-content {
+  background: transparent;
+}
+
+.dt-root .ant-table-thead > tr > th {
+  background: var(--table-header-bg);
+  font-weight: 600;
+  color: var(--text-body);
+}
+
+.dt-root .ant-table-tbody > tr > td {
+  background: transparent;
+}
+
+.dt-root .ant-table-tbody > tr:hover > td {
+  background: var(--table-row-hover) !important;
+}
+
+.dt-root .ant-table-tbody > tr.dt-row-clickable {
+  cursor: pointer;
+}
+
+/* ---------------- 表头：筛选图标 + 拖拽态 ---------------- */
+
+.dt-header-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dt-filter-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  color: var(--icon-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dt-filter-icon:hover {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.dt-filter-icon.is-active {
+  color: var(--color-primary);
+}
+
+.dt-root .ant-table-thead > tr > th.dt-draggable-header {
+  cursor: grab;
+}
+
+.dt-root .ant-table-thead > tr > th {
+  position: relative;
+}
+
+.dt-header-inner {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* 列拖拽手柄：th 不可拖（避免 Chrome 吞 click），只从这里发起拖拽 */
+.dt-drag-handle {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 2px;
+  margin-left: -2px;
+  color: var(--icon-muted);
+  cursor: grab;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.dt-drag-handle:active {
+  cursor: grabbing;
+}
+
+.dt-root .ant-table-thead > tr > th:hover .dt-drag-handle {
+  opacity: 1;
+}
+
+.dt-drag-handle:hover {
+  color: var(--color-primary);
+}
+
+/* 排序表头：文字可点击循环排序，默认无图标 */
+.dt-header-text.is-sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.dt-header-text.is-sortable:hover {
+  color: var(--color-primary);
+}
+
+.dt-sort-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 3px;
+  color: var(--color-primary);
+  vertical-align: -2px;
+}
+
+/* 列宽拖拽手柄：贴列右缘（自研排序后无 antd 排序容器遮挡），光标为 chevrons-left-right（SVG data-uri） */
+.dt-col-resizer {
+  position: absolute;
+  top: 0;
+  right: -4px;
+  width: 14px;
+  height: 100%;
+  z-index: 10;
+  pointer-events: all;
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23344054' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 7-4 4 4 4'/%3E%3Cpath d='m15 7 4 4-4 4'/%3E%3C/svg%3E")
+      12 12,
+    col-resize;
+}
+
+.dt-root .ant-table-thead > tr > th.dt-draggable-header.is-dragging {
+  opacity: 0.4;
+}
+
+.dt-root .ant-table-thead > tr > th.dt-draggable-header.is-drag-over {
+  border-left: 2px solid var(--color-primary) !important;
+  background: var(--color-primary-light);
+}
+
+/* ---------------- 筛选面板 ---------------- */
+
+.dt-filter-panel {
+  min-width: 160px;
+  max-width: 240px;
+}
+
+.dt-filter-checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.dt-filter-empty {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.dt-filter-footer {
+  margin-top: 8px;
+  text-align: right;
+  border-top: 1px solid var(--border);
+  padding-top: 4px;
+}
+
+/* ---------------- 列设置面板 ---------------- */
+
+.dt-column-panel {
+  width: 220px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.dt-column-panel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dt-reset-link {
+  color: var(--color-primary);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.dt-column-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: grab;
+  transition: background 0.15s;
+}
+
+.dt-column-item:hover {
+  background: var(--color-primary-light);
+}
+
+.dt-column-item.is-drag-over {
+  box-shadow: inset 0 2px 0 var(--color-primary);
+}
+
+.dt-drag-handle {
+  color: var(--icon-muted);
+  cursor: grab;
+  flex-shrink: 0;
+}
+
+.dt-panel-tip {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-strong);
+  font-size: 12px;
+  color: var(--text-secondary);
+}

@@ -1,0 +1,32 @@
+.building-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+}
+
+.building-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.building-title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-title);
+}
+
+.building-desc {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}

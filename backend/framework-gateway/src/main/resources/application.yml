@@ -1,0 +1,14 @@
+server:
+  port: ${SERVER_PORT:8090}
+
+spring:
+  application:
+    name: framework-gateway
+  cloud:
+    nacos:
+      server-addr: ${NACOS_ADDR:localhost:18848}
+  config:
+    import:
+      # 业务配置（路由/CORS/jwt 密钥等）在配置中心 dataId=framework-gateway.yaml，
+      # 内容见 deploy/nacos/framework-gateway.yaml；optional: 本地无 nacos 时按默认配置启动
+      - optional:nacos:framework-gateway.yaml

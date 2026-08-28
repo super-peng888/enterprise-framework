@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.framework</groupId>
+        <artifactId>enterprise-framework</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>framework-common</artifactId>
+    <packaging>jar</packaging>
+    <name>framework-common</name>
+    <description>通用模块：统一返回、分页、错误码、审计注解、TraceId、用户上下文、JWT 工具</description>
+
+    <dependencies>
+        <!-- jjwt：JwtUtils 供网关/各服务轻量校验 token（版本由父 pom 统一管理） -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+</project>

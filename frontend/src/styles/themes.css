@@ -1,0 +1,201 @@
+/**
+ * 两套主题变量表：浅色 cool（默认）/ 深色 dark。
+ * 由 src/stores/theme.ts 持久化 themeKey，App 启动时写到
+ * <html data-theme="...">；此处按属性选择器覆盖 global.css :root 的兜底值。
+ * 本文件需在 global.css 之后引入（src/main.tsx）。
+ *
+ * 设计原则（2026-08 布局重构）：
+ * - 灰底白卡结构：应用底平色灰（cool #f0f0f0 / dark #14161a），
+ *   sidebar 透明透出应用底，右侧 body 为一张浮起的圆角大卡。
+ * - 中性单色主色：主按钮/链接/强调色为近黑（dark 反转为浅底深字），无紫；
+ *   菜单选中态为灰色圆角背景 + 文字加深。
+ * - cool：平净浅色——无渐变无光晕无玻璃模糊；卡片纯白 + 1px 发丝边 + 极浅阴影。
+ * - dark：深色磨砂浮板——rgba(255,255,255,0.05) + blur(24px) + 0.09 细边；
+ *   光晕保留低浓度（中性蓝灰，透过磨砂 body 卡与透明 sidebar）。
+ * - 统计卡 chip 配色：--chip-{amber,blue,pink,violet}-{bg,fg} 两主题各一套。
+ */
+
+/* ============ 浅色（默认）：灰底 + 白色圆角大卡，中性深色主色 ============ */
+[data-theme='cool'] {
+  --color-primary: #1f2124;
+  --color-primary-hover: #2a2d31;
+  --color-primary-light: rgba(23, 24, 26, 0.07);
+  --color-primary-contrast: #ffffff;
+  /* 主按钮质感：顶部微高光 + 细腻投影 */
+  --btn-primary-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+
+  --bg-page: #f7f7f7;
+  --body-shadow: none;
+
+  /* 文字层级：tailwind slate 系 */
+  --text-title: #101828;
+  --text-body: #475467;
+  --text-secondary: #98a2b3;
+  --icon-muted: #98a2b3;
+
+  --color-success: #0d9f6e;
+  --color-warning: #d97706;
+  --color-danger: #e5484d;
+  --color-info: #0891b2;
+  --success-light: #ecfdf5;
+  --warning-light: #fffbeb;
+  --danger-light: #fef2f2;
+  --info-light: rgba(8, 145, 178, 0.1);
+  --neutral-light: #f1f5f9;
+  --mark-bg: #fef08a;
+
+  /* 卡片：纯白 + 发丝边 + 极浅阴影，不模糊不透明 */
+  --glass-bg: #ffffff;
+  --glass-border: #e9edf0;
+  --card-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --card-shadow-hover: 0 4px 12px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.04);
+
+  /* 悬浮条（DataTable 搜索区）：浅灰内嵌 + 发丝阴影 */
+  --float-bar-bg: #f9fafb;
+  --float-bar-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --float-bar-blur: none;
+
+  --surface: #ffffff;
+  --surface-2: #f7f8fa;
+  --border: #e9edf0;
+  --border-strong: #d9dee6;
+  --border-glass: #e9edf0;
+  --hover-glass: #f5f6f8;
+  --hover-glass-strong: #eef0f4;
+
+  /* 菜单：未选中次要灰字，hover 浅灰，选中灰色圆角底 + 近黑文字（无紫无渐变） */
+  --menu-hover-bg: rgba(0, 0, 0, 0.045);
+  --menu-selected-bg: #ececee;
+  --menu-selected-color: #17181a;
+  --menu-selected-shadow: none;
+
+  --table-header-bg: #f9fafb;
+  --table-row-hover: rgba(0, 0, 0, 0.03);
+  --overlay-bg: rgba(255, 255, 255, 0.94);
+  --overlay-bg-strong: rgba(255, 255, 255, 0.97);
+  --overlay-shadow: 0 12px 32px rgba(16, 24, 40, 0.12);
+  --scrollbar-thumb: #d0d5dd;
+
+  /* 统计卡 pastel chip：浅底 + 同色图标 */
+  --chip-amber-bg: #fef3c7;
+  --chip-amber-fg: #d97706;
+  --chip-blue-bg: #e0f2fe;
+  --chip-blue-fg: #0284c7;
+  --chip-pink-bg: #fce7f3;
+  --chip-pink-fg: #db2777;
+  --chip-violet-bg: #ede9fe;
+  --chip-violet-fg: #7c3aed;
+
+  /* 登录页品牌区：中性深灰（与主色同族，无紫） */
+  --login-brand-bg: linear-gradient(150deg, #26292e 0%, #17181a 55%, #23282e 100%);
+  --login-glow-2-bg: radial-gradient(circle, rgba(148, 163, 184, 0.3) 0%, rgba(148, 163, 184, 0) 70%);
+}
+
+/* ============ 深色：深底 + 深色磨砂圆角大卡，主色反转为浅底深字 ============ */
+[data-theme='dark'] {
+  --color-primary: #eceef2;
+  --color-primary-hover: #ffffff;
+  --color-primary-light: rgba(255, 255, 255, 0.12);
+  --color-primary-contrast: #17181a;
+  --btn-primary-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 1px 2px rgba(0, 0, 0, 0.45);
+
+  /* 应用底：平色深灰黑 */
+  --bg-page: #14161a;
+  --body-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  /* 文字全反白 */
+  --text-title: #eef0fa;
+  --text-body: #b8bdd6;
+  --text-secondary: #6f7594;
+  --icon-muted: #454c6b;
+
+  --color-success: #34c694;
+  --color-warning: #eba94c;
+  --color-danger: #f06a6e;
+  --color-info: #4dd0e1;
+  --success-light: rgba(52, 198, 148, 0.14);
+  --warning-light: rgba(235, 169, 76, 0.14);
+  --danger-light: rgba(240, 106, 110, 0.14);
+  --info-light: rgba(77, 208, 225, 0.14);
+  --neutral-light: rgba(255, 255, 255, 0.07);
+  --mark-bg: rgba(253, 230, 138, 0.28);
+
+  /* 深色磨砂浮板：0.05 白 + blur(24px) + 0.09 细边 + 柔和投影 */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-blur: blur(24px) saturate(1.5);
+  --card-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  --card-shadow-hover:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 14px 40px rgba(0, 0, 0, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+
+  --float-bar-bg: rgba(255, 255, 255, 0.05);
+  --float-bar-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --float-bar-blur: blur(24px) saturate(1.5);
+
+  --surface: #1b1e25;
+  --surface-2: #16191f;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --border-glass: rgba(255, 255, 255, 0.09);
+  --hover-glass: rgba(255, 255, 255, 0.05);
+  --hover-glass-strong: rgba(255, 255, 255, 0.09);
+
+  /* 菜单：hover 微亮，选中浅灰圆角底 + 亮白文字（无渐变胶囊） */
+  --menu-hover-bg: rgba(255, 255, 255, 0.06);
+  --menu-selected-bg: rgba(255, 255, 255, 0.1);
+  --menu-selected-color: #ffffff;
+  --menu-selected-shadow: none;
+
+  --table-header-bg: rgba(255, 255, 255, 0.04);
+  --table-row-hover: rgba(255, 255, 255, 0.05);
+  --overlay-bg: rgba(27, 30, 37, 0.94);
+  --overlay-bg-strong: rgba(30, 33, 41, 0.97);
+  --overlay-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --scrollbar-thumb: #3a3f4a;
+
+  /* 深色 chip：同色系半透明底 + 亮色图标 */
+  --chip-amber-bg: rgba(235, 169, 76, 0.16);
+  --chip-amber-fg: #eba94c;
+  --chip-blue-bg: rgba(96, 165, 250, 0.16);
+  --chip-blue-fg: #60a5fa;
+  --chip-pink-bg: rgba(244, 114, 182, 0.16);
+  --chip-pink-fg: #f472b6;
+  --chip-violet-bg: rgba(167, 139, 250, 0.18);
+  --chip-violet-fg: #a78bfa;
+
+  /* 光晕：低浓度氛围（0.16-0.22），中性蓝灰/青，无紫 */
+  --glow-1-bg: radial-gradient(circle, rgba(110, 130, 170, 0.22), rgba(110, 130, 170, 0) 70%);
+  --glow-2-bg: radial-gradient(circle, rgba(52, 199, 164, 0.16), rgba(52, 199, 164, 0) 70%);
+  --glow-3-bg: radial-gradient(circle, rgba(160, 150, 140, 0.14), rgba(160, 150, 140, 0) 70%);
+  --glow-4-bg: radial-gradient(circle, rgba(90, 150, 240, 0.17), rgba(90, 150, 240, 0) 70%);
+  --glow-5-bg: radial-gradient(circle, rgba(140, 150, 170, 0.18), rgba(140, 150, 170, 0) 70%);
+
+  --login-brand-bg: linear-gradient(150deg, #26292e 0%, #14161a 55%, #1d2126 100%);
+  --login-glow-2-bg: radial-gradient(circle, rgba(148, 163, 184, 0.22) 0%, rgba(148, 163, 184, 0) 70%);
+}
+
+/* 浅色主题：平净底，不渲染环境光晕（仅 dark 保留低浓度辉光） */
+[data-theme='cool'] .ambient-glows {
+  display: none;
+}
+
+/* 主题切换时底色/文字平滑过渡 */
+body,
+.core-card,
+.sidebar,
+.main-body,
+.header {
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}

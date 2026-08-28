@@ -1,0 +1,46 @@
+# enterprise-framework 部署编排
+#
+# 本框架不新增中间件，全部复用 mcn-platform 已在运行的容器：
+#
+#   | 中间件   | 容器            | 端口  | 本框架用法                                   |
+#   | -------- | --------------- | ----- | -------------------------------------------- |
+#   | Postgres | mcn-postgres    | 5432  | 独立库 ef（CREATE DATABASE ef;）             |
+#   | Redis    | mcn-redis       | 6379  | 同实例（密码 mcn_redis_123），按需分 db        |
+#   | RabbitMQ | mcn-rabbitmq    | 5672  | 同 vhost，exchange/queue 均为 framework.* 前缀 |
+#   | Nacos    | mcn-nacos-verify| 18848 | 同实例，dataId 为 framework-*.yaml             |
+#
+# 首次使用建库：
+#   docker exec mcn-postgres psql -U postgres -c "CREATE DATABASE ef;"
+#
+# 后端两个服务（framework-gateway 8090 / framework-system 8091）直接宿主机
+# java -jar 启动，见根目录 README「快速开始」。如需容器化后端，取消下方注释：
+#
+# services:
+#   framework-system:
+#     image: eclipse-temurin:21-jre
+#     container_name: framework-system
+#     working_dir: /app
+#     volumes:
+#       - ../backend/framework-system/target/framework-system-1.0.0.jar:/app/app.jar:ro
+#     command: ["java", "-jar", "/app/app.jar"]
+#     environment:
+#       NACOS_ADDR: host.docker.internal:18848
+#       REDIS_PASSWORD: mcn_redis_123
+#       RABBITMQ_USER: mcn
+#       RABBITMQ_PASS: mcn123456
+#     ports:
+#       - "8091:8091"
+#
+#   framework-gateway:
+#     image: eclipse-temurin:21-jre
+#     container_name: framework-gateway
+#     working_dir: /app
+#     volumes:
+#       - ../backend/framework-gateway/target/framework-gateway-1.0.0.jar:/app/app.jar:ro
+#     command: ["java", "-jar", "/app/app.jar"]
+#     environment:
+#       NACOS_ADDR: host.docker.internal:18848
+#     ports:
+#       - "8090:8090"
+#     depends_on:
+#       - framework-system

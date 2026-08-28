@@ -1,0 +1,222 @@
+/**
+ * 角色管理卡片式布局。配色全部走 themes.css 主题变量（cool/dark 自动适配）：
+ * 卡片 = --glass-bg + --glass-border 发丝边 + --card-shadow；hover 微浮起；
+ * 数据范围 Tag 五色 = scope-{green,blue,cyan,orange,violet} 对应 --*-light/--chip-* 变量。
+ */
+
+.roles-page {
+  padding: 2px;
+  overflow-y: auto;
+}
+
+/* ---------------- 顶部工具栏 ---------------- */
+
+.roles-toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.roles-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-title);
+}
+
+.roles-sub {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.roles-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ---------------- 卡片网格 ---------------- */
+
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 14px;
+  padding-bottom: 8px;
+}
+
+.role-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 16px 16px 12px;
+  box-shadow: var(--card-shadow);
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    background-color 0.25s ease;
+}
+
+.role-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--border-strong);
+}
+
+.role-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.role-card-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-title);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.role-card-code {
+  margin-top: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.role-card-desc {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-body);
+  /* 两行截断，缺描述时占位保持卡片等高 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 39px;
+}
+
+.role-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.role-card-members {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.role-card-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ---------------- 新建角色虚线卡 ---------------- */
+
+.role-card-create {
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 170px;
+  border: 1.5px dashed var(--border-strong);
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 14px;
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.role-card-create:hover {
+  color: var(--text-title);
+  border-color: var(--text-secondary);
+  background: var(--hover-glass);
+}
+
+/* ---------------- 数据范围 Tag（五色，走主题变量） ---------------- */
+
+.scope-tag {
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.scope-tag.scope-green {
+  background: var(--success-light);
+  color: var(--color-success);
+}
+
+.scope-tag.scope-blue {
+  background: var(--chip-blue-bg);
+  color: var(--chip-blue-fg);
+}
+
+.scope-tag.scope-cyan {
+  background: var(--info-light);
+  color: var(--color-info);
+}
+
+.scope-tag.scope-orange {
+  background: var(--warning-light);
+  color: var(--color-warning);
+}
+
+.scope-tag.scope-violet {
+  background: var(--chip-violet-bg);
+  color: var(--chip-violet-fg);
+}
+
+/* ---------------- 权限配置 Drawer ---------------- */
+
+.perm-drawer-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--float-bar-bg);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.perm-drawer-tree {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* 空态 */
+.roles-empty {
+  grid-column: 1 / -1;
+  padding: 64px 0;
+}

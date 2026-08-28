@@ -1,0 +1,20 @@
+/**
+ * Dream Han Sans CN（筑梦黑）字体注册。
+ * 文件较大（CJK 全字库 ~34MB/个），font-display: swap 避免阻塞渲染；
+ * W7 作为正文字重（400/500），W14 作为标题粗体（600/700/800）。
+ */
+@font-face {
+  font-family: 'Dream Han Sans CN';
+  src: url('@/assets/fonts/DreamHanSansCN-W7.otf') format('opentype');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Dream Han Sans CN';
+  src: url('@/assets/fonts/DreamHanSansCN-W14.otf') format('opentype');
+  font-weight: 600 700 800 900;
+  font-style: normal;
+  font-display: swap;
+}

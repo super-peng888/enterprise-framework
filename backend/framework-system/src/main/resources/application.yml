@@ -1,0 +1,14 @@
+server:
+  port: ${SERVER_PORT:8091}
+
+spring:
+  application:
+    name: framework-system
+  cloud:
+    nacos:
+      server-addr: ${NACOS_ADDR:localhost:18848}
+  config:
+    import:
+      # 业务配置（datasource/redis/rabbitmq/jwt/feishu 等）在配置中心 dataId=framework-system.yaml，
+      # 内容见 deploy/nacos/framework-system.yaml；optional: 本地无 nacos 时按默认配置启动
+      - optional:nacos:framework-system.yaml
